@@ -1,0 +1,35 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Shopping Cart</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 2rem; background-color: #f4f4f4; }
+    h1 { color: #003366; }
+    table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+    th, td { border: 1px solid #ccc; padding: 0.75rem; text-align: left; }
+    th { background-color: #A4C639; color: #000; }
+    tr:nth-child(even) { background-color: #eee; }
+  </style>
+</head>
+<body>
+  <h1>Your Cart</h1>
+  <table>
+    <thead>
+      <tr><th>Product</th><th>Size</th></tr>
+    </thead>
+    <tbody id="cartTableBody"></tbody>
+  </table>
+
+  <script>
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const tbody = document.getElementById('cartTableBody');
+    cart.forEach(item => {
+      const row = document.createElement('tr');
+      row.innerHTML = `<td>${item.product}</td><td>${item.size}</td>`;
+      tbody.appendChild(row);
+    });
+  </script>
+</body>
+</html>

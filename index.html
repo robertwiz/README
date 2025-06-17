@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Surpass Chemical Products</title>
+  <style>
+    :root {
+      --primary-color: #003366;
+      --accent-color: #A4C639;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: var(--primary-color);
+      color: white;
+      padding: 1rem;
+      text-align: center;
+    }
+    main {
+      padding: 2rem;
+    }
+    h1 {
+      color: var(--primary-color);
+    }
+    .search-box {
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+    .search-box input {
+      padding: 0.5rem;
+      font-size: 1rem;
+      width: 60%;
+      max-width: 400px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    .product-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+    }
+    .product-card {
+      background-color: white;
+      border: 1px solid #ccc;
+      padding: 1rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    .product-card h2 {
+      font-size: 1.2rem;
+      color: var(--primary-color);
+    }
+    .size-option {
+      background-color: var(--accent-color);
+      color: #000;
+      margin: 0.25rem 0;
+      padding: 0.5rem;
+      text-align: center;
+      border-radius: 4px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .size-option:hover {
+      background-color: #8FBF2D;
+    }
+    footer {
+      background-color: var(--primary-color);
+      color: white;
+      text-align: center;
+      padding: 1rem;
+      margin-top: 2rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Surpass Chemical Product Catalog</h1>
+  </header>
+  <main>
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder="Search for a product..." onkeyup="filterProducts()">
+    </div>
+    <section class="product-list" id="productList"></section>
+  </main>
+  <footer>
+    &copy; 2025 Surpass Chemical. All rights reserved.
+  </footer>
+  <script>
+    const products = [
+      "Acetic Acid", "Acetone", "Aluminum Sulfate", "Ammonia", "Boric Acid",
+      "Calcium Chloride", "Citric Acid", "Copper Sulfate", "Ethanol", "Ethyl Acetate",
+      "Ferric Chloride", "Hydrochloric Acid", "Hydrogen Peroxide", "Isopropanol", "Magnesium Chloride",
+      "Methanol", "Muriatic Acid", "Phosphoric Acid", "Potassium Hydroxide", "Sodium Bicarbonate",
+      "Sodium Hydroxide", "Sulfuric Acid", "Zinc Sulfate"
+    ];
+    const container = document.getElementById('productList');
+    products.forEach(name => {
+      const card = document.createElement('div');
+      card.className = 'product-card';
+      card.innerHTML = `<h2>${name}</h2>
+        <div class="size-option" onclick="addToCart('${name}', '1 Quart')">1 Quart</div>
+        <div class="size-option" onclick="addToCart('${name}', '1 Gallon')">1 Gallon</div>
+        <div class="size-option" onclick="addToCart('${name}', '5 Gallon')">5 Gallon</div>
+        <div class="size-option" onclick="addToCart('${name}', '55 Gallon Drum')">55 Gallon Drum</div>
+        <div class="size-option" onclick="addToCart('${name}', '270 Gallon Tote')">270 Gallon Tote</div>`;
+      container.appendChild(card);
+    });
+    function addToCart(product, size) {
+      const cart = JSON.parse(localStorage.getItem('cart')) || [];
+      cart.push({ product, size });
+      localStorage.setItem('cart', JSON.stringify(cart));
+      alert(`${product} (${size}) added to cart.`);
+    }
+    function filterProducts() {
+      const input = document.getElementById('searchInput');
+      const filter = input.value.toLowerCase();
+      const cards = document.querySelectorAll('.product-card');
+      cards.forEach(card => {
+        const text = card.textContent.toLowerCase();
+        card.style.display = text.includes(filter) ? '' : 'none';
+      });
+    }
+  </script>
+</body>
+</html>
